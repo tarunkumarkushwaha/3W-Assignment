@@ -33,7 +33,8 @@ const COOKIE_OPTIONS = {
 const port = process.env.PORT || 3000;
 
 const allowedOrigins = [
-  "http://localhost:5173",
+  // "http://localhost:5173",
+  "https://taruntaskplanet.netlify.app/"
 ];
 
 app.use(

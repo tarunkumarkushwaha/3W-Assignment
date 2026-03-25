@@ -5,7 +5,8 @@ const authSlice = createSlice({
     initialState: {
         accessToken: localStorage.getItem('token') || null,
         userName: localStorage.getItem('userName') || null,
-        backendURL: "http://localhost:3000",
+        backendURL: "https://threew-assignment-lgvx.onrender.com",
+        // backendURL: "http://localhost:3000",  // for dev
         loading: false,
         dark: localStorage.getItem('theme') === 'dark',
     },
