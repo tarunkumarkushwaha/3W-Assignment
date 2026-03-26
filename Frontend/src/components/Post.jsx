@@ -237,10 +237,10 @@ const Post = ({ item }) => {
 
             {/* Comment Boxx */}
             {commentBox && (
-                <div style={{ padding: '16px', backgroundColor: dark ? '#0f172a' : '#f8fafc', borderTop: `1px solid ${dark ? '#334155' : '#e2e8f0'}` }}>
+                <div className='side-entry' style={{ padding: '16px', backgroundColor: dark ? '#0f172a' : '#f8fafc', borderTop: `1px solid ${dark ? '#334155' : '#e2e8f0'}` }}>
                     <div style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '12px' }}>
                         {item.comments?.map((c, index) => (
-                            <div key={index} style={{ marginBottom: '8px', fontSize: '13px', display: "flex", flexDirection: "column" }}>
+                            <div key={index} className='side-entry' style={{ marginBottom: '8px', fontSize: '13px', display: "flex", flexDirection: "column" }}>
                                 <span style={{ fontWeight: '700', color: '#2563eb', marginRight: '6px', marginBottom: "6px" }}>{c.username}</span>
                                 <span style={{ color: dark ? '#cbd5e1' : '#475569' }}>{c.text}</span>
                             </div>

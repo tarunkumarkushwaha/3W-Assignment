@@ -7,7 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const PostPage = () => {
   const dispatch = useDispatch();
-
+  const { dark } = useSelector((state) => state.AUTH);
   const { items, status, error } = useSelector((state) => state.POST);
 
   useEffect(() => {
@@ -17,17 +17,53 @@ const PostPage = () => {
 
   return (
     <>
-      <div className="bg-linear-to-b from-green-50 to-green-200 min-h-screen flex justify-center items-center p-10 flex-col">
-        <div className='mx-2 flex items-center w-full gap-4 flex-col'>
-          <div className='w-full max-w-xl xl:mx-0 mx-auto'>
+      <div
+        className="side-entry"
+        style={{
+          background: dark
+            ? 'linear-gradient(to bottom, #0f172a, #1e293b)'
+            : 'linear-gradient(to bottom, #f0fdf4, #dcfce7)',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '40px 10px',
+          transition: 'background 0.3s ease'
+        }}
+      >
+        <div style={{
+          margin: '0 8px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          gap: '16px'
+        }}>
+          <div style={{
+            width: '100%',
+            maxWidth: '576px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}>
             <AddPost />
 
             {status === 'loading' && (
-              <LoadingSpinner />
+              <div style={{ padding: '20px 0' }}>
+                <LoadingSpinner />
+              </div>
             )}
 
             {status === 'failed' && (
-              <p className="text-center text-red-500 my-4">Error loading posts: {error}</p>
+              <p style={{
+                textAlign: 'center',
+                color: '#ef4444',
+                marginTop: '16px',
+                marginBottom: '16px',
+                fontWeight: '500'
+              }}>
+                Error loading posts: {error}
+              </p>
             )}
 
             {status === 'succeeded' && items.map((item) => (

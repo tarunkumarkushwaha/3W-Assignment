@@ -116,14 +116,15 @@ const Signup = () => {
 
 
   return (
-    <section className="mainbg" style={{
+    <section className="side-entry" style={{
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'left',
       minHeight: '100vh',
-      marginTop: '40px'
+      
     }}>
       <div style={{
         minHeight: '100vh',
+        borderRadius: '24px',
         background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.8) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(2, 6, 23, 0.8) 100%)',
         display: 'flex',
         alignItems: 'center',

@@ -6,7 +6,7 @@ const Home = () => {
     const { backendStatus } = useSelector((state) => state.AUTH);
     let navigate = useNavigate()
     return (
-        <div style={{
+        <div className="side-entry" style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -38,7 +38,7 @@ const Home = () => {
             </p>
 
             {backendStatus === "loading" && (
-                <div style={{
+                <div className="side-entry" style={{
                     color: "black",
                     display: "flex",
                     alignItems: "center",

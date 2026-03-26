@@ -90,13 +90,14 @@ const Login = () => {
 
   return (
     <>
-      <div className="mainbg" style={{
+      <div className="side-entry" style={{
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'left',
         minHeight: '100vh'
       }}>
         <div style={{
           minHeight: '100vh',
+          borderRadius: '24px',
           background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.8) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(2, 6, 23, 0.8) 100%)',
           display: 'flex',
           alignItems: 'center',

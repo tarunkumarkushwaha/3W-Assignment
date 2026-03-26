@@ -51,7 +51,8 @@ const EditPostModal = ({ open, onClose, postData }) => {
         }}
       />
 
-      <div style={{
+      <div
+      className="side-entry" style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -86,7 +87,7 @@ const EditPostModal = ({ open, onClose, postData }) => {
             value={inputPost}
             onChange={(e) => setInputPost(e.target.value)}
             style={{
-              width: '100%',
+              width: '95%',
               minHeight: '120px',
               padding: '12px',
               border: dark ? '1px solid #334155' : '1px solid #cbd5e1',
