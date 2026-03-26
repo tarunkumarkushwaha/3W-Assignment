@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { logout, themeChange } from '../../redux/authSlice';
 
 const Navbar = () => {
-  const [menu, setmenu] = useState(false);
+  const [menu, setmenu] = useState(true);
   const { accessToken, userName, dark, backendURL } = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,13 +53,47 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const navLinkStyle = (dark) => ({ isActive }) => ({
+    textDecoration: 'none',
+    fontSize: '15px',
+    fontWeight: '600',
+    color: isActive ? '#2563eb' : (dark ? '#94a3b8' : '#64748b'),
+    borderBottom: isActive && window.innerWidth > 768 ? '2px solid #2563eb' : 'none',
+    paddingBottom: window.innerWidth > 768 ? '24px' : '0',
+    transition: 'color 0.2s ease'
+  });
+
+  const themeButtonStyle = (dark) => ({
+    background: 'none',
+    border: dark ? '1px solid #334155' : '1px solid #e2e8f0',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: dark ? '#fbbf24' : '#64748b'
+  });
+
+  const authButtonStyle = (dark, accessToken) => ({
+    backgroundColor: accessToken ? 'transparent' : '#2563eb',
+    color: accessToken ? (dark ? '#f8fafc' : '#1e293b') : '#ffffff',
+    border: accessToken ? `1px solid ${dark ? '#334155' : '#e2e8f0'}` : 'none',
+    padding: '10px 24px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: '700',
+    cursor: 'pointer'
+  });
+
   return (
     <>
       <header style={{ position: 'relative', zIndex: 100 }}>
         <nav
           style={{
             backgroundColor: dark ? '#1e293b' : '#ffffff',
-            position: 'fixed', 
+            position: 'fixed',
             width: '100%',
             top: 0,
             left: 0,
@@ -70,7 +104,8 @@ const Navbar = () => {
             padding: '0 5%',
             boxShadow: dark ? '0 4px 6px -1px rgba(0,0,0,0.5)' : '0 1px 3px rgba(0,0,0,0.1)',
             borderBottom: dark ? '1px solid #334155' : '1px solid #e2e8f0',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            boxSizing: 'border-box'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -98,75 +133,76 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {menu && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
-              <ul style={{
-                display: 'flex',
-                gap: '25px',
-                listStyle: 'none',
-                margin: 0,
-                padding: 0
-              }}>
-                <li>
-                  <NavLink to="/" style={({ isActive }) => ({
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: isActive ? '#2563eb' : (dark ? '#94a3b8' : '#64748b'),
-                    borderBottom: isActive ? '2px solid #2563eb' : 'none',
-                    paddingBottom: '24px'
-                  })}>Home</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/post" style={({ isActive }) => ({
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    color: isActive ? '#2563eb' : (dark ? '#94a3b8' : '#64748b'),
-                    borderBottom: isActive ? '2px solid #2563eb' : 'none',
-                    paddingBottom: '24px'
-                  })}>Discussions</NavLink>
-                </li>
-              </ul>
+          <button
+            onClick={() => setmenu(!menu)}
+            style={{
+              display: window.innerWidth > 768 ? 'none' : 'block',
+              background: 'none',
+              border: 'none',
+              fontSize: '24px',
+              cursor: 'pointer',
+              color: dark ? '#f8fafc' : '#1e293b'
+            }}
+          >
+            {menu ? '✕' : '☰'}
+          </button>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <button
-                  onClick={handleTheme}
-                  style={{
-                    background: 'none',
-                    border: dark ? '1px solid #334155' : '1px solid #e2e8f0',
-                    borderRadius: '50%',
-                    width: '36px',
-                    height: '36px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: dark ? '#fbbf24' : '#64748b'
-                  }}
-                >
-                  {dark ? '☀️' : '🌙'}
-                </button>
+       
+          <div style={{
+            display: (menu || window.innerWidth > 768) ? 'flex' : 'none',
+            alignItems: 'center',
+            gap: '30px',
+            ...(window.innerWidth <= 768 && {
+              flexDirection: 'column',
+              position: 'absolute',
+              top: '70px',
+              left: 0,
+              width: '100%',
+              backgroundColor: dark ? '#1e293b' : '#ffffff',
+              padding: '30px 0',
+              borderBottom: dark ? '2px solid #334155' : '2px solid #f1f5f9',
+              boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+              zIndex: 99
+            })
+          }}>
+            <ul style={{
+              display: 'flex',
+              gap: '25px',
+              flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+              alignItems: 'center',
+              listStyle: 'none',
+              margin: 0,
+              padding: 0
+            }}>
+              <li>
+                <NavLink to="/" onClick={() => window.innerWidth <= 768 && setmenu(false)} style={navLinkStyle(dark)}>Home</NavLink>
+              </li>
+              <li>
+                <NavLink to="/post" onClick={() => window.innerWidth <= 768 && setmenu(false)} style={navLinkStyle(dark)}>Discussions</NavLink>
+              </li>
+            </ul>
 
-                <button
-                  onClick={accessToken ? handleLogout : loginClick}
-                  style={{
-                    backgroundColor: accessToken ? 'transparent' : '#2563eb',
-                    color: accessToken ? (dark ? '#f8fafc' : '#1e293b') : '#ffffff',
-                    border: accessToken ? `1px solid ${dark ? '#334155' : '#e2e8f0'}` : 'none',
-                    padding: '8px 20px',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {accessToken ? 'Log Out' : 'Sign In'}
-                </button>
-              </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px',
+              flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
+            }}>
+              <button
+                onClick={handleTheme}
+                style={themeButtonStyle(dark)}
+              >
+                {dark ? '☀️' : '🌙'}
+              </button>
+
+              <button
+                onClick={accessToken ? handleLogout : loginClick}
+                style={authButtonStyle(dark, accessToken)}
+              >
+                {accessToken ? 'Log Out' : 'Sign In'}
+              </button>
             </div>
-          )}
+          </div>
         </nav>
         <div style={{ height: '70px' }}></div>
       </header>

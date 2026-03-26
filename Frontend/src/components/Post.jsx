@@ -44,7 +44,7 @@ const Post = ({ item }) => {
     // const [disliked, setDisliked] = useState(false);
     const [commentBox, setCommentBox] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-
+    const [animateBtn, setAnimateBtn] = useState(null);
     const post = useSelector((state) => state.POST)
     const { dark } = useSelector((state) => state.AUTH);
     const liked = item.userLiked;
@@ -53,11 +53,27 @@ const Post = ({ item }) => {
     const dispatch = useDispatch()
 
     const toggleLike = () => {
+        setAnimateBtn(null);
+
+        setTimeout(() => {
+            setAnimateBtn('like');
+        }, 10);
+
         dispatch(likePostAsync({ postId: item._id }));
+
+        setTimeout(() => setAnimateBtn(null), 300);
     };
 
     const toggleDislike = () => {
+        setAnimateBtn(null);
+
+        setTimeout(() => {
+            setAnimateBtn('dislike');
+        }, 10);
+
         dispatch(dislikePostAsync({ postId: item._id }));
+
+        setTimeout(() => setAnimateBtn(null), 300);
     };
 
     const addComment = () => {
@@ -105,18 +121,19 @@ const Post = ({ item }) => {
     };
 
     return (
-        <div style={{
-            backgroundColor: dark ? '#1e293b' : '#ffffff',
-            borderRadius: '12px',
-            border: dark ? '1px solid #334155' : '1px solid #e2e8f0',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            maxWidth: '576px',
-            margin: '16px auto',
-            width: '100%',
-            overflow: 'hidden',
-            transition: 'all 0.3s ease',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
-        }}>
+        <div
+            className="post-animation"
+            style={{
+                backgroundColor: dark ? '#1e293b' : '#ffffff',
+                borderRadius: '12px',
+                border: dark ? '1px solid #334155' : '1px solid #e2e8f0',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                maxWidth: '576px',
+                margin: '16px auto',
+                width: '100%',
+                overflow: 'hidden',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
+            }}>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -203,12 +220,12 @@ const Post = ({ item }) => {
                 borderTop: `1px solid ${dark ? '#334155' : '#f1f5f9'}`, backgroundColor: dark ? '#1e293b' : '#fafafa'
             }}>
                 <button style={actionButtonStyle(liked)} onClick={toggleLike}>
-                    <img width="18" height="18" src={liked ? "https://img.icons8.com/ios-filled/50/2563eb/facebook-like.png" : "https://img.icons8.com/ios/50/64748b/facebook-like.png"} alt="like" />
+                    <img className={animateBtn === 'like' ? 'button-clicked' : ''} width="18" height="18" src={liked ? "https://img.icons8.com/ios-filled/50/2563eb/facebook-like.png" : "https://img.icons8.com/ios/50/64748b/facebook-like.png"} alt="like" />
                     <span>Like ({item.likes?.length || item.likes})</span>
                 </button>
 
                 <button style={actionButtonStyle(disliked)} onClick={toggleDislike}>
-                    <img width="18" height="18" src={disliked ? "https://img.icons8.com/ios-filled/50/2563eb/thumbs-down.png" : "https://img.icons8.com/ios/50/64748b/thumbs-down.png"} alt="dislike" />
+                    <img className={animateBtn === 'dislike' ? 'button-clicked' : ''} width="18" height="18" src={disliked ? "https://img.icons8.com/ios-filled/50/2563eb/thumbs-down.png" : "https://img.icons8.com/ios/50/64748b/thumbs-down.png"} alt="dislike" />
                     <span>Dislike ({item.dislikes?.length || item.dislikes})</span>
                 </button>
 

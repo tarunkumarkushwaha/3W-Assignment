@@ -4,6 +4,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         accessToken: localStorage.getItem('token') || null,
+        backendStatus: "idle", // idle | loading | ready | error 
         userName: localStorage.getItem('userName') || null,
         backendURL: "https://threew-assignment-lgvx.onrender.com",
         // backendURL: "http://localhost:3000",  // for dev
@@ -34,9 +35,12 @@ const authSlice = createSlice({
         },
         setLoading: (state, action) => {
             state.loading = action.payload;
+        },
+        setBackendStatus: (state, action) => {
+            state.backendStatus = action.payload;
         }
     }
 });
 
-export const { setAuth, logout, themeChange, setLoading, setUserName } = authSlice.actions;
+export const { setAuth, logout, themeChange, setLoading, setUserName, setBackendStatus } = authSlice.actions;
 export default authSlice.reducer;

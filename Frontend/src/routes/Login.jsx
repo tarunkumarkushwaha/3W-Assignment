@@ -76,7 +76,7 @@ const Login = () => {
       }));
 
       toast.success(`User ${userName} signed in successfully`);
-      dispatch(resetPostState());
+      // dispatch(resetPostState());
       navigate("/post");
 
     } catch (err) {

@@ -3,6 +3,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import "./App.css"
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -14,8 +15,8 @@ import Foot from "./components/Foot";
 import ErrorPage from "./routes/ErrorPage";
 import PublicRoute from "./routes/PublicRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Home from "./routes/Home"; 
-import { setAuth, setLoading } from '../redux/authSlice';
+import Home from "./routes/Home";
+import { setAuth, setLoading, setBackendStatus } from '../redux/authSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,12 +25,15 @@ function App() {
   useEffect(() => {
     const refresh = async () => {
       try {
+        dispatch(setBackendStatus("loading"));
+
         const res = await fetch(`${backendURL}/refresh`, {
           method: "POST",
           credentials: "include",
         });
 
         if (!res.ok) {
+          dispatch(setBackendStatus("error"));
           if (accessToken) {
             toast.error("Session expired. Please login again.");
           }
@@ -44,7 +48,11 @@ function App() {
             username: data.username || localStorage.getItem('userName')
           }));
         }
+
+        dispatch(setBackendStatus("ready"));
+
       } catch (err) {
+        dispatch(setBackendStatus("error"));
         console.error("Error refreshing token:", err);
       } finally {
         dispatch(setLoading(false));

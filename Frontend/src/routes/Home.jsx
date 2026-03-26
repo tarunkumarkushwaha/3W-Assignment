@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 const Home = () => {
     const { dark } = useSelector((state) => state.AUTH);
-
+    const { backendStatus } = useSelector((state) => state.AUTH);
     let navigate = useNavigate()
     return (
         <div style={{
@@ -36,6 +36,21 @@ const Home = () => {
             }}>
                 The modern platform for share ur ideas
             </p>
+
+            {backendStatus === "loading" && (
+                <div style={{
+                    color: "black",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "column"
+                }}>
+                    <p style={{ fontSize: "18px" }}>Waking up server...</p>
+                    <p style={{ fontSize: "14px", color: "black" }}>
+                        This may take 10-20 seconds (free hosting)
+                    </p>
+                </div>
+            )}
 
             <button
                 onClick={() => navigate("/login")}

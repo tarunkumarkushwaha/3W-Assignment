@@ -49,6 +49,8 @@ export default function AddPost() {
                 textAlign: 'left',
                 overflow: 'hidden',
                 width: '100%',
+                maxWidth: '576px',
+                margin: '16px auto',
                 border: dark ? '1px solid #334155' : '1px solid #e2e8f0',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
                 transition: 'all 0.3s ease'
