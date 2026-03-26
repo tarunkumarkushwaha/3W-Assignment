@@ -46,6 +46,7 @@ const Signup = () => {
   const { backendURL, dark } = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
 
+  // for validaton of passowed 
   const passwordValidator = (pass) => {
     let result = { error: false, errormessege: "" };
 
@@ -73,7 +74,7 @@ const Signup = () => {
     return result;
   };
 
-
+  // on login clicking 
   const handle = async () => {
     dispatch(setUserName(e.target.value))
     let username = naam

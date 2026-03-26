@@ -8,7 +8,7 @@ export default function AddPost() {
     const { dark } = useSelector((state) => state.AUTH);
     const [showEmojiModal, setshowEmojiModal] = useState(false);
     const [inputPost, setinputPost] = useState("");
-    const [file, setFile] = useState([]);
+    const [file, setFile] = useState([]);  // for images
     const dispatch = useDispatch()
 
     function handleChange(e) {

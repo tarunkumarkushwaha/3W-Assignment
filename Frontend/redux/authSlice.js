@@ -11,12 +11,14 @@ const authSlice = createSlice({
         dark: localStorage.getItem('theme') === 'dark',
     },
     reducers: {
+        // used to set token and user name 
         setAuth: (state, action) => {
             state.accessToken = action.payload.token;
             state.userName = action.payload.username;
             localStorage.setItem('token', action.payload.token);
             localStorage.setItem('userName', action.payload.username);
         },
+        // logout obiously
         logout: (state) => {
             state.accessToken = null;
             state.userName = null;

@@ -105,12 +105,10 @@ const Login = () => {
         }}>
           <section style={{ width: '100%', maxWidth: '400px' }}>
 
-            {/* Glass Card */}
             <div style={{
               borderRadius: '24px',
               backgroundColor: 'rgba(255, 255, 255, 0.05)',
               backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)', // Safari support
               border: '1px solid rgba(255, 255, 255, 0.1)',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
               overflow: 'hidden'

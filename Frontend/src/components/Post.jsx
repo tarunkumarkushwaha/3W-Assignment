@@ -89,6 +89,7 @@ const Post = ({ item }) => {
         }
     };
 
+    // to get time elapsed 
     const getTimeElapsed = (createdTime) => {
         const createdDate = new Date(createdTime).getTime();
         const currentTime = new Date().getTime();
@@ -116,7 +117,7 @@ const Post = ({ item }) => {
             transition: 'all 0.3s ease',
             fontFamily: 'system-ui, -apple-system, sans-serif'
         }}>
-            {/* Header Section */}
+
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ fontWeight: '700', color: '#2563eb', fontSize: '14px' }}>{item.username}</span>
@@ -133,6 +134,8 @@ const Post = ({ item }) => {
                         onClick={() => setShowEdit(!showEdit)}
                     >⋮</button>
 
+
+                    {/* editing btn  */}
                     {showEdit && (
                         <div style={{
                             position: 'absolute', zIndex: 10, right: 0, top: '25px',
@@ -148,6 +151,8 @@ const Post = ({ item }) => {
                 </div>
             </div>
 
+
+            {/* text post content here - */}
             <div style={{ px: '16px', padding: '0 16px 12px 16px' }}>
                 <p style={{
                     color: dark ? '#f1f5f9' : '#1e293b', fontSize: '15px',
@@ -165,6 +170,7 @@ const Post = ({ item }) => {
                 </p>
             </div>
 
+            {/* for image if any  */}
             {item.imageSrc && item.imageSrc.length > 0 && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', padding: '0 16px 16px 16px' }}>
                     {item.imageSrc.slice(0, 3).map((src, index) => (
@@ -191,7 +197,7 @@ const Post = ({ item }) => {
                 </div>
             )}
 
-            {/* Footer Actions */}
+            {/* Footer Actions for like dislike btns comments also */}
             <div style={{
                 display: 'flex', justifyContent: 'space-between', padding: '12px 16px',
                 borderTop: `1px solid ${dark ? '#334155' : '#f1f5f9'}`, backgroundColor: dark ? '#1e293b' : '#fafafa'
@@ -212,13 +218,13 @@ const Post = ({ item }) => {
                 </button>
             </div>
 
-            {/* Comment Box */}
+            {/* Comment Boxx */}
             {commentBox && (
                 <div style={{ padding: '16px', backgroundColor: dark ? '#0f172a' : '#f8fafc', borderTop: `1px solid ${dark ? '#334155' : '#e2e8f0'}` }}>
                     <div style={{ maxHeight: '200px', overflowY: 'auto', marginBottom: '12px' }}>
                         {item.comments?.map((c, index) => (
-                            <div key={index} style={{ marginBottom: '8px', fontSize: '13px' }}>
-                                <span style={{ fontWeight: '700', color: '#2563eb', marginRight: '6px' }}>{c.username}</span>
+                            <div key={index} style={{ marginBottom: '8px', fontSize: '13px', display: "flex", flexDirection: "column" }}>
+                                <span style={{ fontWeight: '700', color: '#2563eb', marginRight: '6px', marginBottom: "6px" }}>{c.username}</span>
                                 <span style={{ color: dark ? '#cbd5e1' : '#475569' }}>{c.text}</span>
                             </div>
                         ))}
@@ -241,6 +247,8 @@ const Post = ({ item }) => {
                 </div>
             )}
 
+
+            {/* edit modal here */}
             {showEditModal && (
                 <EditPostModal
                     open={showEditModal}

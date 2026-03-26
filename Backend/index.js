@@ -31,12 +31,13 @@ const COOKIE_OPTIONS = {
 };
 
 const port = process.env.PORT || 3000;
-
+//  only data fetching from allowed urls will work other will throw cors error 
 const allowedOrigins = [
   "http://localhost:5173",
   "https://taruntaskplanet.netlify.app"
 ];
 
+// cors header 
 app.use(
   cors({
     origin: function (origin, callback) {

@@ -17,27 +17,32 @@ const getAuthHeader = () => {
   };
 };
 
-
+// to fetch all postss 
 export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
   const response = await axios.get(API_URL, getAuthHeader());
   return response.data;
 });
 
+// adding posts 
 export const addPostAsync = createAsyncThunk('post/addPost', async (postData) => {
   const response = await axios.post(API_URL, postData, getAuthHeader());
   return response.data;
 });
 
+// deleting post 
 export const deletePostAsync = createAsyncThunk('post/deletePost', async (postId) => {
   await axios.delete(`${API_URL}/${postId}`, getAuthHeader());
   return postId;
 });
 
+// updating post 
 export const updatePostAsync = createAsyncThunk('post/updatePost', async ({ id, content }) => {
   const response = await axios.put(`${API_URL}/${id}`, { content }, getAuthHeader());
   return response.data;
 });
 
+
+// like post 
 export const likePostAsync = createAsyncThunk(
   'post/likePost',
   async ({ postId }, { rejectWithValue }) => {
@@ -52,7 +57,7 @@ export const likePostAsync = createAsyncThunk(
         postId,
         likes: response.data.likes,
         dislikes: response.data.dislikes,
-        userLiked: response.data.userLiked,
+        userLiked: response.data.userLiked,  // it like and dislike of the logged user current one
         userDisliked: response.data.userDisliked
       };
     } catch (err) {
@@ -61,6 +66,7 @@ export const likePostAsync = createAsyncThunk(
   }
 );
 
+// dislike post 
 export const dislikePostAsync = createAsyncThunk(
   'post/dislikePost',
   async ({ postId }, { rejectWithValue }) => {
@@ -75,7 +81,7 @@ export const dislikePostAsync = createAsyncThunk(
         postId,
         likes: response.data.likes,
         dislikes: response.data.dislikes,
-        userLiked: response.data.userLiked,
+        userLiked: response.data.userLiked,  // same as above 
         userDisliked: response.data.userDisliked
       };
     } catch (err) {
@@ -84,6 +90,7 @@ export const dislikePostAsync = createAsyncThunk(
   }
 );
 
+// add comment 
 export const addCommentAsync = createAsyncThunk('post/addComment', async ({ postId, text }) => {
   const response = await axios.post(`${API_URL}/${postId}/comment`, { text }, getAuthHeader());
   return response.data.post;
@@ -99,7 +106,7 @@ const postSlice = createSlice({
     error: null
   },
   reducers: {
-    resetPostState: (state) => {
+    resetPostState: (state) => {  // unused
       state.status = 'idle';
     }
   },
