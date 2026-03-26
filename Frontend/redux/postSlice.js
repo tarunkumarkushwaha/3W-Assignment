@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = "http://localhost:3000/discussions";
+//  backendURL: "https://threew-assignment-lgvx.onrender.com",
+// backendURL: "http://localhost:3000",  // for dev
+const API_URL = "https://threew-assignment-lgvx.onrender.com/discussions";
 
 const getAuthHeader = () => {
   const token = localStorage.getItem('token');
@@ -96,7 +98,11 @@ const postSlice = createSlice({
     status: 'idle',
     error: null
   },
-  reducers: {},
+  reducers: {
+    resetPostState: (state) => {
+      state.status = 'idle';
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => {

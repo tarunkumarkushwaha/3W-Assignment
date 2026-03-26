@@ -2,19 +2,18 @@ import AddPost from '../components/AddPost';
 import Post from "../components/Post";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../../redux/postSlice'; 
+import { fetchPosts } from '../../redux/postSlice';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const PostPage = () => {
   const dispatch = useDispatch();
-  
+
   const { items, status, error } = useSelector((state) => state.POST);
 
   useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [status, dispatch]);
+    dispatch(fetchPosts());
+
+  }, [dispatch]);
 
   return (
     <>
@@ -24,7 +23,7 @@ const PostPage = () => {
             <AddPost />
 
             {status === 'loading' && (
-              <LoadingSpinner/>
+              <LoadingSpinner />
             )}
 
             {status === 'failed' && (

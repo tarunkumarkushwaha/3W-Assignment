@@ -5,9 +5,42 @@ import { setAuth, setLoading } from '../../redux/authSlice';
 import { setUserName } from '../../redux/authSlice';
 import { toast } from "react-toastify"
 
+const labelStyle = {
+  display: 'block',
+  marginBottom: '6px',
+  fontSize: '14px',
+  fontWeight: '500',
+  color: '#e2e8f0'
+};
+
+const inputStyle = {
+  width: '100%',
+  borderRadius: '12px',
+  padding: '12px 16px',
+  fontSize: '14px',
+  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  color: '#fff',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  outline: 'none',
+  transition: 'all 0.2s ease',
+  boxSizing: 'border-box'
+};
+
+const buttonStyle = {
+  width: '100%',
+  borderRadius: '14px',
+  padding: '14px',
+  fontSize: '15px',
+  fontWeight: '600',
+  color: '#fff',
+  border: 'none',
+  boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.3)',
+  transition: 'all 0.3s ease'
+};
+
 const Login = () => {
   const [password, setpassword] = useState("")
-  const { userName, backendURL, loading } = useSelector((state) => state.AUTH);
+  const { userName, backendURL, loading, dark } = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -43,6 +76,7 @@ const Login = () => {
       }));
 
       toast.success(`User ${userName} signed in successfully`);
+      dispatch(resetPostState());
       navigate("/post");
 
     } catch (err) {
@@ -56,90 +90,100 @@ const Login = () => {
 
   return (
     <>
-      <div className="mainbg bg-no-repeat bg-left min-h-screen">
-        <div className="min-h-screen bg-linear-to-br from-slate-950/80 via-slate-900/70 to-slate-950/80 flex items-center justify-center px-4">
+      <div className="mainbg" style={{
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'left',
+        minHeight: '100vh'
+      }}>
+        <div style={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.8) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(2, 6, 23, 0.8) 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 16px'
+        }}>
+          <section style={{ width: '100%', maxWidth: '400px' }}>
 
-          <section className="smooth-entry w-full max-w-md">
+            {/* Glass Card */}
+            <div style={{
+              borderRadius: '24px',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)', // Safari support
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+              overflow: 'hidden'
+            }}>
 
-            <div className="rounded-2xl bg-white/10 backdrop-blur-xl 
-          border border-white/10 shadow-2xl shadow-black/40">
+              <div style={{ padding: '32px' }}>
 
-              <div className="p-8 space-y-6">
-
-                <div className="text-center">
-
-                  <p className="mt-2 text-sm text-slate-300">
-                    Sign in to continue to Task planet
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                  <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#fff', margin: '0' }}>Welcome Back</h2>
+                  <p style={{ marginTop: '8px', fontSize: '14px', color: '#94a3b8' }}>
+                    Sign in to continue to <span style={{ color: '#38bdf8', fontWeight: '600' }}>Task Planet</span>
                   </p>
                 </div>
 
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-                <div className="space-y-5">
-
+                  {/* Email Field */}
                   <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-1 text-sm font-medium text-slate-200"
-                    >
-                      Email or Username
-                    </label>
+                    <label htmlFor="email" style={labelStyle}>Email or Username</label>
                     <input
-                      value={userName ? userName : ""}
+                      value={userName || ""}
                       onChange={(e) => dispatch(setUserName(e.target.value))}
                       type="email"
-                      name="email"
                       id="email"
                       placeholder="yourname@anymail.com"
                       required
-                      className="w-full rounded-lg px-4 py-2.5 text-sm
-                    bg-white/10 text-white placeholder-slate-400
-                    border border-white/10
-                    focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      style={inputStyle}
                     />
                   </div>
 
+                  {/* Password Field */}
                   <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-1 text-sm font-medium text-slate-200"
-                    >
-                      Password
-                    </label>
+                    <label htmlFor="password" style={labelStyle}>Password</label>
                     <input
                       value={password}
                       onChange={(e) => setpassword(e.target.value.trim())}
                       type="password"
-                      name="password"
                       id="password"
                       placeholder="••••••••"
                       required
-                      className="w-full rounded-lg px-4 py-2.5 text-sm
-                    bg-white/10 text-white placeholder-slate-400
-                    border border-white/10
-                    focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      style={inputStyle}
                     />
                   </div>
 
+                  {/* Login Button */}
                   <button
                     onClick={handleSignin}
                     disabled={loading}
-                    className={`w-full rounded-xl py-3 text-sm font-semibold text-white
-                  bg-linear-to-r from-green-400 to-blue-600
-                  shadow-lg shadow-blue-500/30
-                  transition-all duration-300
-                  hover:shadow-blue-500/50 hover:-translate-y-0.5
-                  active:scale-95
-                  ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    style={{
+                      ...buttonStyle,
+                      opacity: loading ? 0.6 : 1,
+                      cursor: loading ? 'not-allowed' : 'pointer',
+                      background: 'linear-gradient(to right, #4ade80, #2563eb)',
+                    }}
+                    onMouseOver={(e) => {
+                      if (!loading) {
+                        e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 10px 20px -5px rgba(37, 99, 235, 0.5)';
+                      }
+                    }}
+                    onMouseOut={(e) => {
+                      if (!loading) {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = '0 10px 15px -3px rgba(37, 99, 235, 0.3)';
+                      }
+                    }}
                   >
                     {loading ? "Signing in..." : "Sign In"}
                   </button>
 
-                  <p className="text-center text-sm text-slate-400">
+                  <p style={{ textAlign: 'center', fontSize: '14px', color: '#94a3b8', margin: '0' }}>
                     Don’t have an account yet?{" "}
-                    <Link
-                      to="/signup"
-                      className="font-medium text-sky-400 hover:underline"
-                    >
+                    <Link to="/signup" style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: '600' }}>
                       Sign up
                     </Link>
                   </p>
@@ -147,7 +191,6 @@ const Login = () => {
                 </div>
               </div>
             </div>
-
           </section>
         </div>
       </div>

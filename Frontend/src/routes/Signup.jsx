@@ -4,12 +4,46 @@ import { useState } from "react"
 import { setUserName } from '../../redux/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+const labelStyle = {
+  display: 'block',
+  marginBottom: '6px',
+  fontSize: '14px',
+  fontWeight: '500',
+  color: '#e2e8f0'
+};
+
+const inputStyle = {
+  width: '100%',
+  borderRadius: '12px',
+  padding: '12px 16px',
+  fontSize: '14px',
+  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  color: '#fff',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  outline: 'none',
+  transition: 'all 0.2s ease',
+  boxSizing: 'border-box' // Essential for width: 100% to work with padding
+};
+
+const buttonStyle = {
+  width: '100%',
+  borderRadius: '14px',
+  padding: '14px',
+  fontSize: '15px',
+  fontWeight: '600',
+  color: '#fff',
+  border: 'none',
+  boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.3)',
+  transition: 'all 0.3s ease',
+  cursor: 'pointer'
+};
+
 const Signup = () => {
   const [naam, setnaam] = useState("")
   const [password, setpassword] = useState("")
   const [showpass, setshowpass] = useState(false)
   const [checkpassword, setcheckpassword] = useState("")
-  const { backendURL } = useSelector((state) => state.AUTH);
+  const { backendURL, dark } = useSelector((state) => state.AUTH);
   const dispatch = useDispatch();
 
   const passwordValidator = (pass) => {
@@ -81,136 +115,136 @@ const Signup = () => {
 
 
   return (
-    <>
-      <section className="mainbg mt-10 bg-no-repeat bg-left min-h-screen">
-        <div className="min-h-screen bg-linear-to-br from-slate-950/80 via-slate-900/70 to-slate-950/80 flex items-center justify-center px-4">
+    <section className="mainbg" style={{
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'left',
+      minHeight: '100vh',
+      marginTop: '40px'
+    }}>
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.8) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(2, 6, 23, 0.8) 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 16px'
+      }}>
+        <div style={{ width: '100%', maxWidth: '448px' }}>
 
-          <div className="smooth-entry w-full max-w-md">
+          <div style={{
+            borderRadius: '24px',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            overflow: 'hidden'
+          }}>
 
-            <div className="rounded-2xl bg-white/10 backdrop-blur-xl 
-          border border-white/10 shadow-2xl shadow-black/40">
+            <div style={{ padding: '32px' }}>
 
-              <div className="p-8 space-y-6">
+              <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <h1 style={{
+                  fontSize: '28px',
+                  fontWeight: '800',
+                  color: '#fff',
+                  margin: '0',
+                  letterSpacing: '-0.5px'
+                }}>
+                  Create your account
+                </h1>
+                <p style={{ marginTop: '8px', fontSize: '14px', color: '#94a3b8' }}>
+                  Join <span style={{ color: '#38bdf8', fontWeight: '600' }}>Task Planet</span> and start earning smartly
+                </p>
+              </div>
 
-                <div className="text-center">
-                  <h1 className="text-2xl md:text-3xl font-extrabold text-white">
-                    Create your account
-                  </h1>
-                  <p className="mt-2 text-sm text-slate-300">
-                    Join Task planet and start practicing smarter
-                  </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+
+                <div>
+                  <label htmlFor="email" style={labelStyle}>Email</label>
+                  <input
+                    value={naam}
+                    onChange={(e) => setnaam(e.target.value)}
+                    type="email"
+                    id="email"
+                    placeholder="name@anymail.com"
+                    required
+                    style={inputStyle}
+                  />
                 </div>
 
-                <div className="space-y-5">
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-1 text-sm font-medium text-slate-200"
-                    >
-                      Email
-                    </label>
-                    <input
-                      value={naam}
-                      onChange={(e) => setnaam(e.target.value)}
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="name@anymail.com"
-                      required
-                      className="w-full rounded-lg px-4 py-2.5 text-sm
-                    bg-white/10 text-white placeholder-slate-400
-                    border border-white/10
-                    focus:outline-none focus:ring-2 focus:ring-sky-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-1 text-sm font-medium text-slate-200"
-                    >
-                      Password
-                    </label>
-                    <input
-                      value={password}
-                      onChange={(e) => setpassword(e.target.value)}
-                      type={showpass ? "text" : "password"}
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      required
-                      className="w-full rounded-lg px-4 py-2.5 text-sm
-                    bg-white/10 text-white placeholder-slate-400
-                    border border-white/10
-                    focus:outline-none focus:ring-2 focus:ring-sky-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="confirm-password"
-                      className="block mb-1 text-sm font-medium text-slate-200"
-                    >
-                      Confirm Password
-                    </label>
-                    <input
-                      value={checkpassword}
-                      onChange={(e) => setcheckpassword(e.target.value)}
-                      type={showpass ? "text" : "password"}
-                      name="confirm-password"
-                      id="confirm-password"
-                      placeholder="••••••••"
-                      required
-                      className="w-full rounded-lg px-4 py-2.5 text-sm
-                    bg-white/10 text-white placeholder-slate-400
-                    border border-white/10
-                    focus:outline-none focus:ring-2 focus:ring-sky-500"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm text-slate-300">
-                    <input
-                      type="checkbox"
-                      id="check"
-                      name="check"
-                      checked={showpass}
-                      onChange={(e) => setshowpass(e.target.checked)}
-                      className="accent-sky-500"
-                    />
-                    <label htmlFor="check">Show passwords</label>
-                  </div>
-
-                  <button
-                    onClick={handleSignup}
-                    className="w-full rounded-xl py-3 text-sm font-semibold text-white
-                  bg-linear-to-r from-green-400 to-blue-600
-                  shadow-lg shadow-blue-500/30
-                  transition-all duration-300
-                  hover:shadow-blue-500/50 hover:-translate-y-0.5
-                  active:scale-95"
-                  >
-                    Create Account
-                  </button>
-
-                  <p className="text-center text-sm text-slate-400">
-                    Already have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="font-medium text-sky-400 hover:underline"
-                    >
-                      Login here
-                    </Link>
-                  </p>
-
+                <div>
+                  <label htmlFor="password" style={labelStyle}>Password</label>
+                  <input
+                    value={password}
+                    onChange={(e) => setpassword(e.target.value)}
+                    type={showpass ? "text" : "password"}
+                    id="password"
+                    placeholder="••••••••"
+                    required
+                    style={inputStyle}
+                  />
                 </div>
+
+                <div>
+                  <label htmlFor="confirm-password" style={labelStyle}>Confirm Password</label>
+                  <input
+                    value={checkpassword}
+                    onChange={(e) => setcheckpassword(e.target.value)}
+                    type={showpass ? "text" : "password"}
+                    id="confirm-password"
+                    placeholder="••••••••"
+                    required
+                    style={inputStyle}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    id="check"
+                    checked={showpass}
+                    onChange={(e) => setshowpass(e.target.checked)}
+                    style={{ cursor: 'pointer', accentColor: '#38bdf8' }}
+                  />
+                  <label htmlFor="check" style={{ fontSize: '13px', color: '#cbd5e1', cursor: 'pointer' }}>
+                    Show passwords
+                  </label>
+                </div>
+
+                <button
+                  onClick={handleSignup}
+                  style={{
+                    ...buttonStyle,
+                    background: 'linear-gradient(to right, #4ade80, #2563eb)',
+                    marginTop: '10px'
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 10px 20px -5px rgba(37, 99, 235, 0.5)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 10px 15px -3px rgba(37, 99, 235, 0.3)';
+                  }}
+                >
+                  Create Account
+                </button>
+
+                <p style={{ textAlign: 'center', fontSize: '14px', color: '#94a3b8', margin: '0' }}>
+                  Already have an account?{" "}
+                  <Link to="/login" style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: '600' }}>
+                    Login here
+                  </Link>
+                </p>
+
               </div>
             </div>
 
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
 
   )
 }

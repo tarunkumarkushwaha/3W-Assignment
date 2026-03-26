@@ -14,20 +14,12 @@ import Foot from "./components/Foot";
 import ErrorPage from "./routes/ErrorPage";
 import PublicRoute from "./routes/PublicRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Home from "./routes/Home";
-import { fetchPosts } from '../redux/postSlice'; 
+import Home from "./routes/Home"; 
 import { setAuth, setLoading } from '../redux/authSlice';
 
 function App() {
   const dispatch = useDispatch();
   const { accessToken, backendURL } = useSelector((state) => state.AUTH);
-  const { status } = useSelector((state) => state.POST);
-  
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [status, dispatch]);
 
   useEffect(() => {
     const refresh = async () => {
